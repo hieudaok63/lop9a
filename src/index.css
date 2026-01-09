@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Cấu hình theme trực tiếp trong CSS cho bản v4 (nếu cần) */
+@theme {
+  --color-cute-pink: #ffe5e5;
+  --color-cute-peach: #ffd1d1;
+  --color-cute-text: #7c444b;
+  --color-cute-accent: #ff9eaa;
+  --font-sans: "Quicksand", sans-serif;
+}
+
+/* Các style tùy chỉnh */
+body {
+  background: linear-gradient(135deg, #fff5f5 0%, #fff0f5 100%);
+  color: var(--color-cute-text);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
