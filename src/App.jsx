@@ -31,7 +31,7 @@ import { ref, push, onValue } from "firebase/database";
 
 // --- CẤU HÌNH PLAYLIST NHẠC ---
 // Lưu ý: File nhạc phải nằm trong thư mục 'public'
-const PLAYLIST = ["/music2.mp3", "/music.mp3", "/music1.mp3"];
+const PLAYLIST = ["/music2.mp3", "/music.mp3", "/music1.mp3", "/music3.mp3"];
 
 // --- DỮ LIỆU DONATE ---
 const INITIAL_DONORS = [
@@ -561,7 +561,7 @@ const DonateDetail = ({ onBack }) => {
 
 // --- COMPONENT: GÓC KỈ NIỆM (Lightbox) ---
 const MemoriesDetail = ({ onBack }) => {
-  const images = Array.from({ length: 27 }, (_, i) => ({
+  const images = Array.from({ length: 41 }, (_, i) => ({
     id: i + 1,
     src: `/kiniem${i + 1}.jpg`,
     rotation: i % 2 === 0 ? "rotate-1" : "-rotate-1",
