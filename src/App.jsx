@@ -23,6 +23,9 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Star, // Mới
+  Eye, // Mới
+  EyeOff, // Mới
 } from "lucide-react";
 
 // Import Firebase (Giữ nguyên cấu hình cũ của bạn)
@@ -48,6 +51,91 @@ const INITIAL_DONORS = [
     amount: 300000,
     note: "Nhà tài trợ Kim Cương 💎",
     top: true,
+  },
+];
+
+// --- DỮ LIỆU THÀNH TÍCH (MỚI) ---
+const ACHIEVEMENTS_DATA = [
+  {
+    id: 1,
+    title: "Đẻ nhiều nhất lớp",
+    person: "Nguyễn Thị Nhung",
+    desc: "Với 3 em bé xinh xắn Nhung hiện tại đang giữ kỉ lục lớp 9A về số lượng con chúc Nhung sớm có em bé thứ 6 nhé!",
+    img: "/nhung.png",
+    color: "from-blue-400 to-indigo-500",
+  },
+  {
+    id: 2,
+    title: "Học bá của lớp",
+    person: "Nguyễn Trọng Thìn",
+    desc: "Với thành tích 0.5 điểm trung bình cả năm, Thìn đã xuất sắc giành danh hiệu học bá lớp 9A trong suốt 9 năm liền. Chúc Thìn giữ vững phong độ nhé!",
+    img: "/thin.jpg",
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    id: 3,
+    title: "Chúa tể ngoại giao, cây Hài Nhân Dân",
+    person: "Tên là Vân Anh thì phải",
+    desc: "Mở mồm ra là cả lớp cười, cô giáo cũng cười, rất hoà đồng dễ gần hay giúp đỡ bạn bè trong lớp, gắn kết mọi người với nhau vâng đó là những thứ Vân Anh không có. Chúc bạn sớm hoà nhập cộng đồng 9A nhé!",
+    img: "/vananh.jpg",
+    color: "from-green-400 to-teal-500",
+  },
+  {
+    id: 4,
+    title: "Nhiều người yêu nhất lớp",
+    person: "Nguyễn Minh Hiếu",
+    desc: "Mọi người có đôi có cặp hết rồi sao Hiếu vẫn lẻ bóng vậy? Chúc Hiếu sớm tìm được nửa kia của mình nhé! tiện thể trong lớp có bạn nào độc thân thì có Hiếu đang chờ nhé!",
+    img: "/hiu.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 5,
+    title: "Cây văn nghệ của lớp",
+    person: "Nguyễn Thị Ngọc Hồng",
+    desc: "Không những múa đẹp mà còn hát hay nhưng trông con bé đằng sau hài vl, Ngọc Hồng ơi năm nay hát tặng lớp 1 bài nhé!",
+    img: "/ngoc.jpeg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 6,
+    title: "Múp nhất lớp",
+    person: "vâng không ai khác ngoài Sơn Tường",
+    desc: "Để mà lói thì tôi nhìn tôi còn sợ, bới ngay bát cơm ăn đi nhé Sơn ơi! ăn xong rồi hát",
+    img: "/son.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 7,
+    title: "Hay tặng quà nhất lớp",
+    person: "Nguyễn Thị Tú Linh",
+    desc: "Bão like, bão wall, fs, cho kẹo(wen thôi nha).... Cảm ơn những món quà đến từ Tú Linh, chúc Linh kiếm thật nhiều tiền để tặng quà cho bà con Linh nhé!",
+    img: "/kiniem19.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+
+  {
+    id: 8,
+    title: "Hot boy của lớp",
+    person: "Hà Xuân Bình",
+    desc: "Cao ráo, đẹp trai, học giỏi, hát hay, múa dẻo nhưng hay mách cô :Thưa cô bạn Oanh đòi hôn em. Nhưng ảnh này nhìn Bình giống Thìn kẹp vl. Năm nay cưới đi nhé Bình ơi!",
+    img: "/kiniem37.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 9,
+    title: "Mèo con đáng yêu",
+    person: "Ngọc Ánh",
+    desc: "Ai mà không yêu quý được con mèo đáng yêu này chứ, với 10 năm làm quản ca của lớp, rẽ hướng qua điều dưỡng, ai bị trĩ hoặc khám chữa bệnh thì liên hệ Ngọc Ánh nhé!",
+    img: "/anh.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 10,
+    title: "Dam dang nhất lớp",
+    person: "Oanh chứ ai",
+    desc: "Trong lớp thì đòi hôn Bình ra ngoài thì đi cởi quần Đào Hiếu, thế mà giờ đã là mẹ 2 đứa rồi đấy, Năm nay Oanh có về ăn Tết cùng chúng mình không?",
+    img: "/oanh.jpg",
+    color: "from-pink-400 to-rose-500",
   },
 ];
 
@@ -246,7 +334,7 @@ const FloatingBackground = () => {
   );
 };
 
-// --- DATA SECTIONS ---
+// --- DATA SECTIONS (Đã thêm mục mới) ---
 const SECTIONS = [
   {
     id: "tet2026",
@@ -276,6 +364,15 @@ const SECTIONS = [
     desc: "Kho lưu trữ ảnh dìm hàng full HD.",
   },
   {
+    id: "achievements", // ID MỚI
+    title: "Thành Tích Ấn Tượng",
+    icon: <Star className="w-6 h-6 text-purple-500" />,
+    color: "bg-purple-50",
+    border: "border-purple-200",
+    text: "text-purple-800",
+    desc: "Những kỉ lục Guinness độc lạ của lớp 9A.",
+  },
+  {
     id: "awards",
     title: "Dự án nuôi Hiếu & Sơn",
     icon: <Trophy className="w-6 h-6 text-yellow-500" />,
@@ -286,7 +383,138 @@ const SECTIONS = [
   },
 ];
 
-// --- SUB-COMPONENTS ---
+// --- COMPONENT MỚI: THÀNH TÍCH ẤN TƯỢNG ---
+const AchievementsDetail = ({ onBack }) => {
+  const [revealedIds, setRevealedIds] = useState(new Set());
+
+  const toggleReveal = (id) => {
+    const newSet = new Set(revealedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setRevealedIds(newSet);
+  };
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10 pb-24 px-4 pt-4">
+      <button
+        onClick={onBack}
+        className="mb-6 flex items-center gap-2 text-gray-600 bg-white/90 px-4 py-2.5 rounded-full shadow-lg backdrop-blur-md hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 transition-all border border-gray-100"
+      >
+        <ArrowLeft className="w-4 h-4" /> Về Home
+      </button>
+
+      <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-500 p-8 rounded-[35px] text-white shadow-2xl mb-8 relative overflow-hidden group hover:shadow-3xl transition-all duration-500">
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 shimmer"></div>
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+        <Star className="absolute top-4 right-4 text-yellow-200 w-14 h-14 opacity-60 animate-spin-slow" />
+        <div className="relative z-10">
+          <h2 className="text-3xl font-extrabold mb-2 drop-shadow-lg">
+            Hall of Fame 🌟
+          </h2>
+          <p className="text-white/95 text-base font-medium">
+            Bảng vàng thành tích (và cả "thành tích" lạ)
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        {ACHIEVEMENTS_DATA.map((item) => {
+          const isRevealed = revealedIds.has(item.id);
+          return (
+            <div
+              key={item.id}
+              onClick={() => toggleReveal(item.id)}
+              className="bg-white rounded-[28px] p-5 shadow-lg border-2 border-gray-100 cursor-pointer hover:shadow-2xl transition-all duration-300 relative overflow-hidden group"
+            >
+              {/* Badge Tiêu đề */}
+              <div
+                className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${item.color}`}
+              ></div>
+
+              <h3 className="text-center font-extrabold text-xl text-gray-800 mb-4 mt-2">
+                {item.title}
+              </h3>
+
+              {/* Phần ảnh */}
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-4 bg-gray-100 border border-gray-200 shadow-inner">
+                {/* Ảnh thật */}
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+                    isRevealed
+                      ? "blur-0 scale-100"
+                      : "blur-xl scale-110 grayscale"
+                  }`}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://via.placeholder.com/400?text=No+Image";
+                  }}
+                />
+
+                {/* Overlay khi chưa click */}
+                {!isRevealed && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-[2px] transition-opacity duration-300">
+                    <div className="bg-white/90 p-4 rounded-full shadow-2xl animate-bounce">
+                      <EyeOff className="w-8 h-8 text-gray-600" />
+                    </div>
+                    <p className="mt-3 text-white font-bold text-sm bg-black/50 px-4 py-1.5 rounded-full backdrop-blur-md">
+                      Chạm để hiện nguyên hình
+                    </p>
+                  </div>
+                )}
+
+                {/* Hiệu ứng khi đã hiện */}
+                {isRevealed && (
+                  <div className="absolute top-2 right-2 bg-white/80 p-1.5 rounded-full shadow-md animate-in zoom-in">
+                    <Eye className="w-4 h-4 text-green-600" />
+                  </div>
+                )}
+              </div>
+
+              {/* Phần mô tả */}
+              <div
+                className={`text-center transition-all duration-500 ${
+                  isRevealed
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-60 translate-y-2"
+                }`}
+              >
+                {isRevealed ? (
+                  <>
+                    <p
+                      className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r ${item.color} mb-1 animate-in slide-in-from-bottom-2`}
+                    >
+                      {item.person}
+                    </p>
+                    <p className="text-gray-600 text-sm font-medium italic">
+                      "{item.desc}"
+                    </p>
+                  </>
+                ) : (
+                  <div className="h-14 flex items-center justify-center">
+                    <span className="text-gray-400 text-sm animate-pulse">
+                      ???
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <p className="text-center text-gray-400 text-xs mt-8 pb-4">
+        * Hình ảnh chỉ mang tính chất minh họa (hoặc dìm hàng)
+      </p>
+    </div>
+  );
+};
+
+// --- SUB-COMPONENTS CŨ (Giữ nguyên) ---
 const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
   <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10 pb-20 px-4 pt-4">
     <button
@@ -459,7 +687,7 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
   </div>
 );
 
-// --- COMPONENT: QUỸ LỚP ---
+// --- COMPONENT: QUỸ LỚP (Giữ nguyên) ---
 const DonateDetail = ({ onBack }) => {
   const totalAmount = INITIAL_DONORS.reduce(
     (acc, curr) => acc + curr.amount,
@@ -559,7 +787,7 @@ const DonateDetail = ({ onBack }) => {
   );
 };
 
-// --- COMPONENT: GÓC KỈ NIỆM (Lightbox) ---
+// --- COMPONENT: GÓC KỈ NIỆM (Lightbox) (Giữ nguyên) ---
 const MemoriesDetail = ({ onBack }) => {
   const images = Array.from({ length: 41 }, (_, i) => ({
     id: i + 1,
@@ -663,7 +891,7 @@ const MemoriesDetail = ({ onBack }) => {
   );
 };
 
-// --- COMPONENT: DỰ ÁN NUÔI HIẾU & SƠN ---
+// --- COMPONENT: DỰ ÁN NUÔI HIẾU & SƠN (Giữ nguyên) ---
 const AwardsDetail = ({ onBack }) => {
   const [showTroll, setShowTroll] = useState(false);
   const handleTrollClick = () => {
@@ -794,7 +1022,7 @@ const AwardsDetail = ({ onBack }) => {
   );
 };
 
-// --- CHAT REAL-TIME ---
+// --- CHAT REAL-TIME (Giữ nguyên) ---
 const CommentSection = () => {
   const [comments, setComments] = useState([]);
   const [inputName, setInputName] = useState("");
@@ -988,7 +1216,7 @@ const CommentSection = () => {
   );
 };
 
-// --- MÀN HÌNH CHÀO ---
+// --- MÀN HÌNH CHÀO (Giữ nguyên) ---
 const WelcomeScreen = ({ onStart }) => (
   <div className="fixed h-screen inset-0 z-50 bg-gradient-to-br from-pink-100 via-orange-100 to-red-100 flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-700 relative overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-br from-pink-200/30 via-transparent to-orange-200/30 animate-pulse"></div>
@@ -1150,6 +1378,9 @@ function App() {
             {activeTab === "memories" && (
               <MemoriesDetail onBack={() => setActiveTab(null)} />
             )}
+            {activeTab === "achievements" && (
+              <AchievementsDetail onBack={() => setActiveTab(null)} />
+            )}
             {activeTab === "awards" && (
               <AwardsDetail onBack={() => setActiveTab(null)} />
             )}
@@ -1166,6 +1397,7 @@ function App() {
                           item.id === "tet2026" ||
                           item.id === "donate" ||
                           item.id === "memories" ||
+                          item.id === "achievements" ||
                           item.id === "awards"
                             ? setActiveTab(item.id)
                             : alert(`Mục "${item.title}" đang xây dựng!`)
