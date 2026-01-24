@@ -581,14 +581,14 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
           <div className="absolute left-[13px] top-2 bottom-2 w-1 bg-gradient-to-b from-pink-300 via-orange-300 to-purple-300 rounded-full"></div>
           {[
             {
-              time: "14:00 - 15:00",
+              time: "13:00 - 14:00",
               title: "Tập trung & Đi chợ",
               color: "bg-pink-400",
               text: "text-pink-600",
               desc: "Tập trung tại nhà Duy. Chia team đi chợ (Team rau, Team thịt, Team nước ngọt).",
             },
             {
-              time: "15:00 - 17:00",
+              time: "14:00 - 17:00",
               title: "Đại chiến nhà bếp",
               color: "bg-orange-400",
               text: "text-orange-600",
@@ -603,7 +603,8 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
             },
             {
               time: "18:00 - 19:00",
-              title: "Khai tiệc liên hoan 🍻",
+              title:
+                "Khai tiệc liên hoan phát biểu chi tiêu tổng kết quỹ năm 2025 🍻",
               color: "bg-red-500",
               text: "text-red-600",
               desc: "Ăn uống, nâng ly (nước ngọt), dô hò 1-2-3.",
@@ -649,20 +650,207 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
           <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-2xl mb-4">
             <p className="text-gray-700 text-sm font-bold mb-1">
               💰 Vé Số May Mắn:{" "}
-              <span className="text-purple-600 text-lg">30k/vé</span>
+              <span className="text-purple-600 text-lg">69k/vé</span>
             </p>
             <p className="text-red-500 font-bold text-xs flex items-center gap-1">
               <Sparkles className="w-3 h-3" /> Vé phát tối 28 Tết
             </p>
           </div>
+
+          {/* LUẬT CHƠI */}
+          <div className="bg-gradient-to-br from-purple-100 via-indigo-100 to-pink-100 p-5 rounded-3xl mb-4 border-2 border-purple-300 shadow-lg">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="w-6 h-6 text-purple-600 animate-spin" />
+              <h4 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 text-lg">
+                LUẬT CHƠI MINIGAME
+              </h4>
+              <Sparkles className="w-6 h-6 text-pink-600 animate-spin" />
+            </div>
+
+            {/* Mục đích */}
+            <div className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl mb-3 border border-purple-200">
+              <p className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+                <Heart className="w-4 h-4 text-pink-500" />
+                🎯 Mục đích:
+              </p>
+              <ul className="text-xs text-gray-600 space-y-1 ml-6">
+                <li>✨ Gặp lại nhau cho đỡ nhớ</li>
+                <li>😂 Cười cho đỡ stress</li>
+                <li>💰 Và biết đâu... đổi đời trong 1 nốt nhạc!</li>
+              </ul>
+            </div>
+
+            {/* Cơ cấu giải thưởng */}
+            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-2xl mb-3 border-2 border-yellow-300 shadow-md">
+              <p className="text-sm font-bold text-orange-700 mb-2 flex items-center gap-2">
+                <Trophy className="w-4 h-4 text-yellow-600" />
+                🏆 CƠ CẤU GIẢI THƯỞNG:
+              </p>
+              <div className="space-y-2 text-xs">
+                <div className="bg-white/60 px-3 py-2 rounded-xl">
+                  <span className="font-bold text-purple-600">
+                    🔥 15 giải chính:
+                  </span>
+                  <span className="text-gray-700 ml-1">
+                    Bốc thăm trúng thưởng
+                  </span>
+                </div>
+                <div className="bg-white/60 px-3 py-2 rounded-xl">
+                  <span className="font-bold text-indigo-600">
+                    ⚡ 5 giải phụ:
+                  </span>
+                  <span className="text-gray-700 ml-1">
+                    Trả lời câu hỏi nhanh
+                  </span>
+                </div>
+                <div className="bg-gradient-to-r from-red-100 to-pink-100 px-3 py-2 rounded-xl text-center border border-red-200">
+                  <p className="font-extrabold text-red-600">
+                    💎 Tổng giá trị: 1 TỶ ĐỒNG 💎
+                  </p>
+                  <p className="text-[10px] text-gray-500 italic mt-1">
+                    (trong tim BTC và tinh thần là chính nha 🤣)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Vé tham gia */}
+            <div className="bg-gradient-to-r from-pink-50 to-purple-50 p-4 rounded-2xl mb-3 border-2 border-pink-300">
+              <p className="text-sm font-bold text-pink-700 mb-2 flex items-center gap-2">
+                <Ticket className="w-4 h-4 text-pink-600" />
+                🎟 VÉ THAM GIA:
+              </p>
+              <div className="space-y-1.5 text-xs text-gray-700">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
+                  <span>
+                    Giá vé:{" "}
+                    <strong className="text-purple-600">69.000đ/vé</strong> (số
+                    đẹp – giá yêu thương)
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                  <span>
+                    Tổng số vé: <strong>25 vé</strong>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-indigo-400 rounded-full"></span>
+                  <span>
+                    Mỗi bạn mua tối đa: <strong>1 vé</strong>
+                  </span>
+                </div>
+                <p className="text-[10px] text-red-500 italic text-center mt-2 bg-red-50 py-1 rounded-lg">
+                  ⚠️ Ai chậm tay là... ngồi cổ vũ nha 😆
+                </p>
+              </div>
+            </div>
+
+            {/* Hình thức chơi */}
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-2xl mb-3 border-2 border-blue-300">
+              <p className="text-sm font-bold text-blue-700 mb-2 flex items-center gap-2">
+                <Gift className="w-4 h-4 text-blue-600" />
+                🎲 HÌNH THỨC CHƠI:
+              </p>
+              <div className="space-y-2">
+                <div className="bg-white/70 p-3 rounded-xl">
+                  <p className="text-xs font-bold text-purple-600 mb-1">
+                    1️⃣ Bốc thăm trúng thưởng (15 giải)
+                  </p>
+                  <p className="text-[11px] text-gray-600 ml-3">
+                    Vé hợp lệ → có tên → có cơ hội trúng
+                  </p>
+                  <p className="text-[10px] text-gray-500 italic ml-3 mt-1">
+                    Phụ thuộc vào: Nhân phẩm + Tích đức hồi cấp 2 + Bàn tay vàng
+                    của BTC 🤭
+                  </p>
+                </div>
+                <div className="bg-white/70 p-3 rounded-xl">
+                  <p className="text-xs font-bold text-indigo-600 mb-1">
+                    2️⃣ Trò chơi phụ (5 giải)
+                  </p>
+                  <p className="text-[11px] text-gray-600 ml-3">
+                    Ai nhanh tay – nhanh mồm – nhanh trí → rinh quà liền tay
+                  </p>
+                  <p className="text-[10px] text-green-600 font-bold ml-3 mt-1">
+                    ✨ Không cần vé vẫn có thể tham gia!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Lưu ý */}
+            <div className="bg-gradient-to-r from-red-50 to-orange-50 p-3 rounded-2xl mb-3 border border-red-200">
+              <p className="text-xs font-bold text-red-600 mb-1.5">
+                📌 LƯU Ý QUAN TRỌNG:
+              </p>
+              <ul className="text-[11px] text-gray-600 space-y-1 ml-4">
+                <li>• Chương trình mang tính giải trí – vui là chính!</li>
+                <li>• Trúng là vui gấp đôi 😊</li>
+                <li className="text-[10px] italic">
+                  • Quyết định cuối cùng thuộc về BTC
+                </li>
+              </ul>
+            </div>
+
+            {/* Phần kết */}
+            <div className="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 p-4 rounded-2xl border-2 border-pink-300 text-center">
+              <p className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 mb-2">
+                💃🕺 HY VỌNG TẤT CẢ CHÚNG TA SẼ:
+              </p>
+              <div className="flex justify-center gap-2 flex-wrap text-[11px] font-semibold">
+                <span className="bg-white/80 px-3 py-1 rounded-full text-pink-600">
+                  Quẩy nhiệt tình
+                </span>
+                <span className="bg-white/80 px-3 py-1 rounded-full text-purple-600">
+                  Cười hết cỡ
+                </span>
+                <span className="bg-white/80 px-3 py-1 rounded-full text-indigo-600">
+                  Vui hết mình
+                </span>
+              </div>
+              <p className="text-[10px] text-gray-600 mt-2 italic">
+                Để tạo nên buổi họp lớp 9A thật rực rỡ, đáng nhớ ❤️
+              </p>
+            </div>
+
+            {/* Liên hệ BTC */}
+            <div className="mt-3 bg-white/90 p-3 rounded-2xl border border-gray-200">
+              <p className="text-[10px] font-bold text-gray-700 text-center mb-2">
+                📞 CLICK ĐỂ LIÊN HỆ BTC:
+              </p>
+              <div className="flex justify-center gap-2 flex-wrap">
+                <a
+                  href="https://www.facebook.com/hong.son.144130"
+                  className="bg-gradient-to-r from-purple-100 to-pink-100 px-2.5 py-1 rounded-full text-[10px] font-semibold text-purple-700"
+                >
+                  Mr Hồng Sơn
+                </a>
+                <a
+                  href="https://www.facebook.com/hanh.matsanghocduong"
+                  className="bg-gradient-to-r from-blue-100 to-cyan-100 px-2.5 py-1 rounded-full text-[10px] font-semibold text-blue-700"
+                >
+                  Mr Đào Hiếu
+                </a>
+                <a
+                  href="https://www.facebook.com/long05072000"
+                  className="bg-gradient-to-r from-orange-100 to-red-100 px-2.5 py-1 rounded-full text-[10px] font-semibold text-orange-700"
+                >
+                  Mr Long Nguyễn
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="border-2 border-dashed border-purple-300 rounded-2xl p-5 bg-gradient-to-br from-white to-purple-50 text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/30 rounded-full -mr-10 -mt-10"></div>
             <p className="text-xs text-gray-500 uppercase font-bold mb-3 tracking-wider">
-              CK: 20,10 Dao Trung Hieu
+              Nội dung ck: Họ và tên + Vé Số
             </p>
             <div className="w-36 h-36 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-lg relative group">
               <img
-                src="/qr.jpg"
+                src="/qr.jpeg"
                 alt="QR Code"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 onError={(e) => {
@@ -672,6 +860,10 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
                 }}
               />
             </div>
+            <p>
+              Click vào ô bên dưới để quỹ lớp thêm vững mạnh (BTC hứa không đớp)
+              ❤️
+            </p>
             <button
               onClick={onNavigateToDonate}
               className="w-full bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-600 text-white py-3.5 rounded-2xl font-bold text-base shadow-xl flex items-center justify-center gap-2 hover:scale-105 active:scale-95 hover:shadow-2xl transition-all relative overflow-hidden group"
@@ -691,7 +883,7 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
 const DonateDetail = ({ onBack }) => {
   const totalAmount = INITIAL_DONORS.reduce(
     (acc, curr) => acc + curr.amount,
-    0
+    0,
   );
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-5 pt-6 relative z-10">
@@ -766,7 +958,7 @@ const DonateDetail = ({ onBack }) => {
           </p>
           <div className="w-40 h-40 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-xl group">
             <img
-              src="/qr.jpg"
+              src="/qr.jpeg"
               alt="QR Code"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               onError={(e) => {
@@ -1037,7 +1229,7 @@ const CommentSection = () => {
       const data = snapshot.val();
       if (data) {
         const loadedChats = Object.values(data).sort(
-          (a, b) => a.timestamp - b.timestamp
+          (a, b) => a.timestamp - b.timestamp,
         );
         setComments(loadedChats);
       }
@@ -1140,7 +1332,7 @@ const CommentSection = () => {
           <div key={index} className="slide-in-right flex gap-3 group">
             <div
               className={`w-9 h-9 rounded-full ${getAvatarColor(
-                c.user
+                c.user,
               )} flex items-center justify-center text-white font-bold text-sm shadow-md flex-shrink-0`}
             >
               {c.user.charAt(0).toUpperCase()}
