@@ -1095,36 +1095,111 @@ const AwardsDetail = ({ onBack }) => {
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10 pb-24">
       {showTroll && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-300 p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-300 p-6"
           onClick={() => setShowTroll(false)}
         >
           <div
             className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-red-500 p-4 flex items-center justify-center">
-              <AlertTriangle className="text-white w-10 h-10 animate-bounce" />
+            {/* Header giống ngân hàng */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center font-bold text-blue-800 text-sm">
+                  MB
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">MBBank</p>
+                  <p className="text-blue-200 text-xs">Thông báo giao dịch</p>
+                </div>
+              </div>
+              <div className="text-white text-xs bg-blue-700/50 px-2 py-1 rounded">
+                Vừa xong
+              </div>
             </div>
-            <div className="p-6 text-center">
-              <h3 className="text-xl font-bold text-red-600 mb-2">
-                Biến động số dư!
-              </h3>
-              <p className="text-gray-700 mb-4">
-                Tài khoản của bạn vừa bị trừ{" "}
-                <span className="font-bold text-red-500 text-lg">
-                  -2.000.000 VND
-                </span>
-                .<br />
-                <span className="text-xs text-gray-400 italic">
-                  (Phí dịch vụ: Tò mò)
-                </span>
+
+            {/* Nội dung thông báo */}
+            <div className="p-5">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-200">
+                <div className="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center">
+                  <AlertTriangle className="text-red-500 w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-base font-bold text-gray-800">
+                    Biến động số dư
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {new Date().toLocaleString("vi-VN")}
+                  </p>
+                </div>
+              </div>
+
+              {/* Thông tin giao dịch */}
+              <div className="space-y-3 mb-4">
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="text-xs text-gray-600">
+                      Số tiền giao dịch
+                    </span>
+                    <div className="text-right">
+                      <p className="text-2xl font-black text-red-600">
+                        -2.000.000đ
+                      </p>
+                      <p className="text-xs text-red-500">Giao dịch trừ tiền</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-3 space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Số TK:</span>
+                    <span className="font-mono font-bold">
+                      9704 xxxx xxxx 6969
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Nội dung:</span>
+                    <span className="font-semibold text-right">
+                      Phí dịch vụ Tò mò
+                    </span>
+                  </div>
+                  <div className="flex justify-between pt-2 border-t border-gray-200">
+                    <span className="text-gray-600">Số dư khả dụng:</span>
+                    <span className="font-bold text-gray-800">
+                      1.220.220 vnđ
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-xs text-yellow-800 text-center flex items-center justify-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span className="font-semibold">
+                      Chúc mừng bạn đã trúng thưởng 0đ!
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setShowTroll(false)}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3.5 rounded-xl transition-all hover:from-blue-700 hover:to-blue-800 shadow-lg"
+                >
+                  Đã hiểu
+                </button>
+              </div>
+            </div>
+
+            {/* Footer giống thông báo thật */}
+            <div className="bg-gray-50 px-5 py-3 text-center border-t border-gray-200">
+              <p className="text-[10px] text-gray-500">
+                MBBank - Ngân hàng TMCP Quân đội
               </p>
-              <button
-                onClick={() => setShowTroll(false)}
-                className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-xl transition-colors"
-              >
-                Biết lỗi rồi 😭
-              </button>
+              <p className="text-[10px] text-gray-400">
+                Hotline: 1900 xxxx xx (giả)
+              </p>
             </div>
           </div>
         </div>
