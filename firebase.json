@@ -3,6 +3,12 @@
     {
       "site": "9a-than-yeu",
       "public": "dist",
+      "headers": [
+        {
+          "source": "/index.html",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+        }
+      ],
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
