@@ -23,9 +23,11 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Star, // Mới
-  Eye, // Mới
-  EyeOff, // Mới
+  Star,
+  Eye,
+  EyeOff,
+  Moon,
+  Sun,
 } from "lucide-react";
 
 // Import Firebase (Giữ nguyên cấu hình cũ của bạn)
@@ -228,8 +230,33 @@ const globalStyles = `
     0%, 100% { transform: rotate(-3deg); }
     50% { transform: rotate(3deg); }
   }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+  @keyframes shootingStar {
+    0% { transform: translateX(0) translateY(0); opacity: 1; }
+    100% { transform: translateX(-200px) translateY(200px); opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
   .slide-in-up {
     animation: slideInUp 0.5s ease-out forwards;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle linear infinite;
+  }
+  .shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    animation: shootingStar 3s linear infinite;
   }
   .shimmer {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
@@ -1531,25 +1558,97 @@ const CommentSection = () => {
   );
 };
 
-// --- MÀN HÌNH CHÀO (Giữ nguyên) ---
-const WelcomeScreen = ({ onStart }) => (
-  <div className="fixed h-screen inset-0 z-50 bg-gradient-to-br from-pink-100 via-orange-100 to-red-100 flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-700 relative overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-br from-pink-200/30 via-transparent to-orange-200/30 animate-pulse"></div>
-    <div className="absolute top-10 left-10 w-32 h-32 bg-pink-300/20 rounded-full blur-3xl"></div>
-    <div className="absolute bottom-10 right-10 w-40 h-40 bg-orange-300/20 rounded-full blur-3xl"></div>
-    <div className="relative z-10 flex flex-col items-center">
-      <div className="w-28 h-28 bg-gradient-to-br from-white to-pink-50 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce border-4 border-white">
-        <Music className="w-14 h-14 text-pink-500" />
+// --- MÀN HÌNH CHÀO ---
+const WelcomeScreen = ({ onStart, darkMode, toggleDarkMode }) => (
+  <div
+    className={`fixed h-screen inset-0 z-50 flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-700 relative overflow-hidden transition-colors duration-500 ${
+      darkMode
+        ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+        : "bg-gradient-to-br from-pink-100 via-orange-100 to-red-100"
+    }`}
+  >
+    {/* Starry background for dark mode */}
+    {darkMode && (
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 150 }).map((_, i) => (
+          <div
+            key={i}
+            className="star"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
+              animationDuration: `${Math.random() * 3 + 2}s`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
       </div>
-      <h1 className="text-5xl font-extrabold  mb-4 drop-shadow-lg">
+    )}
+
+    {/* Dark mode toggle on welcome screen */}
+    <button
+      onClick={toggleDarkMode}
+      className={`absolute top-4 right-4 z-50 p-3 rounded-full shadow-lg backdrop-blur-sm hover:scale-110 active:scale-95 transition-all ${
+        darkMode
+          ? "bg-purple-800/80 text-yellow-300"
+          : "bg-white/80 text-purple-600"
+      }`}
+    >
+      {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+    </button>
+
+    <div
+      className={`absolute inset-0 animate-pulse ${
+        darkMode
+          ? "bg-gradient-to-br from-purple-900/30 via-transparent to-pink-900/30"
+          : "bg-gradient-to-br from-pink-200/30 via-transparent to-orange-200/30"
+      }`}
+    ></div>
+    <div
+      className={`absolute top-10 left-10 w-32 h-32 rounded-full blur-3xl ${
+        darkMode ? "bg-purple-500/20" : "bg-pink-300/20"
+      }`}
+    ></div>
+    <div
+      className={`absolute bottom-10 right-10 w-40 h-40 rounded-full blur-3xl ${
+        darkMode ? "bg-pink-500/20" : "bg-orange-300/20"
+      }`}
+    ></div>
+    <div className="relative z-10 flex flex-col items-center">
+      <div
+        className={`w-28 h-28 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce border-4 ${
+          darkMode
+            ? "bg-gradient-to-br from-purple-800 to-pink-900 border-purple-500"
+            : "bg-gradient-to-br from-white to-pink-50 border-white"
+        }`}
+      >
+        <Music
+          className={`w-14 h-14 ${darkMode ? "text-pink-400" : "text-pink-500"}`}
+        />
+      </div>
+      <h1
+        className={`text-5xl font-extrabold mb-4 drop-shadow-lg ${
+          darkMode ? "text-purple-100" : "text-gray-800"
+        }`}
+      >
         Chào mừng 9A!
       </h1>
-      <p className="text-gray-700 text-lg mb-10 max-w-sm font-medium leading-relaxed">
+      <p
+        className={`text-lg mb-10 max-w-sm font-medium leading-relaxed ${
+          darkMode ? "text-purple-200" : "text-gray-700"
+        }`}
+      >
         Đeo tai nghe vào để cảm nhận không khí Tết nhé! 🎧🧧
       </p>
       <button
         onClick={onStart}
-        className="bg-gradient-to-r from-pink-500 via-orange-400 to-red-500 text-white px-10 py-5 rounded-full font-extrabold text-xl shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center gap-3 mx-auto relative overflow-hidden group border-2 border-white"
+        className={`px-10 py-5 rounded-full font-extrabold text-xl shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center gap-3 mx-auto relative overflow-hidden group border-2 ${
+          darkMode
+            ? "bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white border-purple-400"
+            : "bg-gradient-to-r from-pink-500 via-orange-400 to-red-500 text-white border-white"
+        }`}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 shimmer"></div>
         <Play className="w-6 h-6 fill-current relative z-10" />
@@ -1560,27 +1659,59 @@ const WelcomeScreen = ({ onStart }) => (
 );
 
 // --- APP COMPONENT ---
-const SectionCard = ({ section, onClick }) => (
+const SectionCard = ({ section, onClick, darkMode }) => (
   <div
     onClick={onClick}
-    className="group p-5 mb-4 rounded-3xl border-2 border-pink-100 bg-white/90 backdrop-blur-sm shadow-md active:scale-95 cursor-pointer flex items-center gap-4 hover:shadow-xl hover:-translate-y-2 hover:border-pink-200 transition-all duration-300 relative overflow-hidden"
+    className={`group p-5 mb-4 rounded-3xl border-2 backdrop-blur-sm shadow-md active:scale-95 cursor-pointer flex items-center gap-4 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden ${
+      darkMode
+        ? "border-purple-700 bg-purple-900/40 hover:border-purple-500"
+        : "border-pink-100 bg-white/90 hover:border-pink-200"
+    }`}
   >
-    <div className="absolute inset-0 bg-gradient-to-r from-pink-50/50 to-orange-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    <div className="bg-gradient-to-br from-pink-50 to-orange-50 p-3 rounded-2xl shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10">
+    <div
+      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+        darkMode
+          ? "bg-gradient-to-r from-purple-800/50 to-pink-800/50"
+          : "bg-gradient-to-r from-pink-50/50 to-orange-50/50"
+      }`}
+    ></div>
+    <div
+      className={`p-3 rounded-2xl shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10 ${
+        darkMode
+          ? "bg-gradient-to-br from-purple-800/50 to-pink-800/50"
+          : "bg-gradient-to-br from-pink-50 to-orange-50"
+      }`}
+    >
       {section.icon}
     </div>
     <div className="flex-1 relative z-10">
       <h3
-        className={`font-bold text-lg ${section.text} group-hover:scale-105 transition-transform duration-300 inline-block`}
+        className={`font-bold text-lg group-hover:scale-105 transition-transform duration-300 inline-block ${
+          darkMode ? "text-purple-200" : section.text
+        }`}
       >
         {section.title}
       </h3>
-      <p className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">
+      <p
+        className={`text-xs mt-1 line-clamp-2 leading-relaxed ${
+          darkMode ? "text-purple-300" : "text-gray-500"
+        }`}
+      >
         {section.desc}
       </p>
     </div>
-    <div className="bg-white/70 p-2 rounded-full group-hover:rotate-12 group-hover:scale-110 transition-all duration-300 relative z-10">
-      <Sparkles className="w-5 h-5 text-pink-400 group-hover:text-orange-400 transition-colors" />
+    <div
+      className={`p-2 rounded-full group-hover:rotate-12 group-hover:scale-110 transition-all duration-300 relative z-10 ${
+        darkMode ? "bg-purple-800/70" : "bg-white/70"
+      }`}
+    >
+      <Sparkles
+        className={`w-5 h-5 transition-colors ${
+          darkMode
+            ? "text-pink-400 group-hover:text-purple-400"
+            : "text-pink-400 group-hover:text-orange-400"
+        }`}
+      />
     </div>
   </div>
 );
@@ -1590,6 +1721,7 @@ function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [darkMode, setDarkMode] = useState(true); // Mặc định là dark mode
   const audioRef = useRef(null);
 
   // LOGIC CHUYỂN BÀI HÁT
@@ -1637,22 +1769,91 @@ function App() {
     }
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="min-h-screen max-w-md mx-auto bg-white shadow-2xl overflow-hidden relative border-x border-gray-50 font-sans flex flex-col">
+    <div
+      className={`min-h-screen max-w-md mx-auto shadow-2xl overflow-hidden relative border-x font-sans flex flex-col transition-colors duration-500 ${
+        darkMode
+          ? "bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 border-purple-800"
+          : "bg-white border-gray-50"
+      }`}
+    >
       <style>{globalStyles}</style>
       <audio ref={audioRef} onEnded={handleSongEnd} />
 
-      {!hasStarted && <WelcomeScreen onStart={handleStart} />}
+      {!hasStarted && (
+        <WelcomeScreen
+          onStart={handleStart}
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
+      )}
 
       {hasStarted && (
         <>
+          {/* Starry Night Background for Dark Mode */}
+          {darkMode && (
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="star"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    width: `${Math.random() * 3 + 1}px`,
+                    height: `${Math.random() * 3 + 1}px`,
+                    animationDuration: `${Math.random() * 3 + 2}s`,
+                    animationDelay: `${Math.random() * 3}s`,
+                  }}
+                />
+              ))}
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={`shooting-${i}`}
+                  className="shooting-star"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 30}%`,
+                    width: "100px",
+                    height: "2px",
+                    animationDelay: `${Math.random() * 5}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
           {/* PHÁO HOA Ở HOME, FLOATING Ở CÁC TAB KHÁC */}
-          {!activeTab && <FireworksCanvas />}
-          {activeTab && <FloatingBackground />}
+          {!activeTab && !darkMode && <FireworksCanvas />}
+          {activeTab && !darkMode && <FloatingBackground />}
+
+          {/* Dark Mode Toggle Button */}
+          <button
+            onClick={toggleDarkMode}
+            className={`fixed top-2 left-2 z-50 p-2 rounded-full shadow-lg backdrop-blur-sm hover:scale-110 active:scale-95 transition-all ${
+              darkMode
+                ? "bg-purple-800/80 text-yellow-300"
+                : "bg-white/80 text-purple-600"
+            }`}
+          >
+            {darkMode ? (
+              <Sun className="w-5 h-5 animate-spin-slow" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </button>
 
           <button
             onClick={toggleMute}
-            className="fixed top-2 right-2 z-50 bg-white/80 p-2 rounded-full shadow-md text-pink-500 backdrop-blur-sm hover:scale-110 transition-transform"
+            className={`fixed top-2 right-2 z-50 p-2 rounded-full shadow-md backdrop-blur-sm hover:scale-110 transition-transform ${
+              darkMode
+                ? "bg-purple-800/80 text-pink-400"
+                : "bg-white/80 text-pink-500"
+            }`}
           >
             {isMuted ? (
               <VolumeX className="w-5 h-5" />
@@ -1662,18 +1863,44 @@ function App() {
           </button>
 
           {!activeTab && (
-            <header className="pt-12 pb-8 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white/0 rounded-b-[50px] relative z-10 flex-shrink-0">
+            <header
+              className={`pt-12 pb-8 px-6 rounded-b-[50px] relative z-10 flex-shrink-0 transition-colors duration-500 ${
+                darkMode
+                  ? "bg-gradient-to-b from-purple-900/50 via-purple-800/30 to-transparent"
+                  : "bg-gradient-to-b from-pink-100 via-pink-50 to-white/0"
+              }`}
+            >
               <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] font-bold tracking-widest text-pink-500 uppercase bg-white px-3 py-1.5 rounded-full shadow-sm border border-pink-100">
+                <span
+                  className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full shadow-sm border transition-colors ${
+                    darkMode
+                      ? "text-purple-300 bg-purple-900/50 border-purple-700 backdrop-blur-sm"
+                      : "text-pink-500 bg-white border-pink-100"
+                  }`}
+                >
                   NĂM 2026
                 </span>
-                <div className="w-10 h-10 bg-gradient-to-tr from-pink-400 to-orange-400 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md ring-4 ring-pink-50 animate-spin-slow">
+                <div
+                  className={`w-10 h-10 bg-gradient-to-tr rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md ring-4 animate-spin-slow ${
+                    darkMode
+                      ? "from-purple-500 to-pink-500 ring-purple-900/50"
+                      : "from-pink-400 to-orange-400 ring-pink-50"
+                  }`}
+                >
                   9A
                 </div>
               </div>
-              <h1 className="text-3xl font-extrabold text-cute-text leading-tight mb-2">
+              <h1
+                className={`text-3xl font-extrabold leading-tight mb-2 transition-colors ${
+                  darkMode ? "text-purple-100" : "text-cute-text"
+                }`}
+              >
                 Lớp 9A <br />
-                <span className="text-pink-400 text-2xl font-medium">
+                <span
+                  className={`text-2xl font-medium ${
+                    darkMode ? "text-purple-300" : "text-pink-400"
+                  }`}
+                >
                   Mãi bên nhau bạn nhé!
                 </span>
               </h1>
@@ -1708,6 +1935,7 @@ function App() {
                       <SectionCard
                         key={item.id}
                         section={item}
+                        darkMode={darkMode}
                         onClick={() =>
                           item.id === "tet2026" ||
                           item.id === "donate" ||
