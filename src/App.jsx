@@ -1056,7 +1056,7 @@ const DonateDetail = ({ onBack }) => {
 
 // --- COMPONENT: GÓC KỈ NIỆM (Lightbox) (Giữ nguyên) ---
 const MemoriesDetail = ({ onBack }) => {
-  const images = Array.from({ length: 41 }, (_, i) => ({
+  const images = Array.from({ length: 59 }, (_, i) => ({
     id: i + 1,
     src: `/kiniem${i + 1}.jpg`,
     rotation: i % 2 === 0 ? "rotate-1" : "-rotate-1",
@@ -1558,6 +1558,130 @@ const CommentSection = () => {
   );
 };
 
+// --- POPUP CHÚC MỪNG NĂM MỚI ---
+const NewYearPopup = ({ onClose, darkMode }) => (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-500">
+    {/* Backdrop */}
+    <div
+      className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+      onClick={onClose}
+    ></div>
+
+    {/* Popup Content */}
+    <div
+      className={`relative max-w-lg w-full rounded-3xl shadow-2xl p-8 animate-in zoom-in duration-700 overflow-hidden ${
+        darkMode
+          ? "bg-gradient-to-br from-purple-900 via-pink-900 to-purple-900"
+          : "bg-gradient-to-br from-pink-50 via-orange-50 to-red-50"
+      }`}
+    >
+      {/* Animated stars/sparkles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className={`absolute animate-pulse ${
+              darkMode ? "bg-yellow-300" : "bg-orange-400"
+            }`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
+              borderRadius: "50%",
+              animationDelay: `${Math.random() * 2}s`,
+              animationDuration: `${Math.random() * 2 + 1}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className={`absolute top-4 right-4 z-10 p-2 rounded-full hover:scale-110 active:scale-95 transition-all ${
+          darkMode
+            ? "bg-purple-800/50 text-purple-200 hover:bg-purple-700/70"
+            : "bg-white/50 text-gray-700 hover:bg-white/70"
+        }`}
+      >
+        <X className="w-5 h-5" />
+      </button>
+
+      {/* Content */}
+      <div className="relative z-10 text-center space-y-6">
+        {/* Icon */}
+        <div className="flex justify-center">
+          <div
+            className={`p-4 rounded-full animate-bounce ${
+              darkMode
+                ? "bg-gradient-to-br from-yellow-400 to-orange-500"
+                : "bg-gradient-to-br from-pink-400 to-red-500"
+            }`}
+          >
+            <Sparkles className="w-12 h-12 text-white" />
+          </div>
+        </div>
+
+        {/* Title */}
+        <h2
+          className={`text-4xl font-black tracking-tight ${
+            darkMode
+              ? "text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300"
+              : "text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-orange-600 to-red-600"
+          }`}
+        >
+          CHÚC MỪNG NĂM MỚI 2026! 🎊
+        </h2>
+
+        {/* Message */}
+        <div
+          className={`space-y-4 text-lg leading-relaxed ${
+            darkMode ? "text-purple-100" : "text-gray-700"
+          }`}
+        >
+          <p className="font-semibold">
+            🧧 Năm mới đến rồi, cả lớp 9A thân yêu ơi! 🧧
+          </p>
+          <p>
+            Một năm đã trôi qua với biết bao kỷ niệm ngọt ngào, những tháng ngày
+            học hành, vui đùa, và chia sẻ cùng nhau.
+          </p>
+          <p className="font-bold text-xl">
+            Chúc các bạn năm mới An Khang - Thịnh Vượng - Hạnh Phúc!
+          </p>
+          <p>
+            ✨ Học giỏi hơn, đẹp hơn, giàu hơn
+            <br />
+            💖 Tình bạn mãi bền chặt
+            <br />
+            🌟 Ước mơ thành hiện thực
+            <br />
+            🎯 Thành công rực rỡ!
+          </p>
+          <p className="italic text-base">
+            Dù chúng ta đã xa nhau từ lâu, nhưng những kỷ niệm về lớp 9A sẽ mãi
+            mãi trong tim mỗi người chúng ta. Hãy cùng nhau ôn lại những khoảnh
+            khắc tuyệt vời đó nhé! 💕
+          </p>
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={onClose}
+          className={`px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:scale-110 active:scale-95 transition-all mt-6 ${
+            darkMode
+              ? "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-white"
+              : "bg-gradient-to-r from-pink-500 via-orange-500 to-red-500 text-white"
+          }`}
+        >
+          Vào Lớp Thôi! 🎉
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
 // --- MÀN HÌNH CHÀO ---
 const WelcomeScreen = ({ onStart, darkMode, toggleDarkMode }) => (
   <div
@@ -1722,6 +1846,7 @@ function App() {
   const [isMuted, setIsMuted] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [darkMode, setDarkMode] = useState(true); // Mặc định là dark mode
+  const [showNewYearPopup, setShowNewYearPopup] = useState(false);
   const audioRef = useRef(null);
 
   // LOGIC CHUYỂN BÀI HÁT
@@ -1745,6 +1870,11 @@ function App() {
   }, [activeTab, hasStarted]);
 
   const handleStart = async () => {
+    setShowNewYearPopup(true);
+  };
+
+  const handlePopupClose = async () => {
+    setShowNewYearPopup(false);
     setHasStarted(true);
     if (audioRef.current) {
       audioRef.current.src = PLAYLIST[currentSongIndex];
@@ -1783,6 +1913,11 @@ function App() {
     >
       <style>{globalStyles}</style>
       <audio ref={audioRef} onEnded={handleSongEnd} />
+
+      {/* New Year Popup */}
+      {showNewYearPopup && (
+        <NewYearPopup onClose={handlePopupClose} darkMode={darkMode} />
+      )}
 
       {!hasStarted && (
         <WelcomeScreen
