@@ -36,7 +36,14 @@ import { ref, push, onValue } from "firebase/database";
 
 // --- CẤU HÌNH PLAYLIST NHẠC ---
 // Lưu ý: File nhạc phải nằm trong thư mục 'public'
-const PLAYLIST = ["/music2.mp3", "/music.mp3", "/music1.mp3", "/music3.mp3"];
+const PLAYLIST = [
+  "/music2.mp3",
+  "/music5.mp3",
+  "/music4.mp3",
+  "/music.mp3",
+  "/music1.mp3",
+  "/music3.mp3",
+];
 
 // --- DỮ LIỆU DONATE ---
 const INITIAL_DONORS = [
@@ -143,7 +150,7 @@ const ACHIEVEMENTS_DATA = [
     id: 11,
     title: "Người luôn giữ bí mật của mọi người",
     person: "Con vợ Thơm",
-    desc: "Nhìn ảnh thì mọi người cũng biết Thơm là người ít mách lẻo kể xấu bạn bè nhất lớp rồi đúng không:)) . Không đấy là cô Thơm dạy tiếng anh còn Thơm này ngoài không giữ bí mật có thể buôn chuyện cả ngày không mệt chính vì thế Thơm rất hợp với liveStream đó. Năm nay dẫn thằng béo đi tiếp nhé Thơm",
+    desc: "Nhìn ảnh thì mọi người cũng biết Thơm là người ít mách lẻo kể xấu bạn bè nhất lớp rồi đúng không:)) . Không đấy là Thơm gần nhà tôi còn Thơm này ngoài không giữ bí mật có thể buôn chuyện cả ngày không mệt chính vì thế Thơm rất hợp với liveStream đó. Năm nay dẫn thằng béo đi tiếp nhé Thơm",
     img: "/thom.jpg",
     color: "from-pink-400 to-rose-500",
   },
@@ -175,16 +182,56 @@ const ACHIEVEMENTS_DATA = [
     id: 15,
     title: "Con bèo đáng yêu của lớp",
     person: "Ẻm tên Sang nhé cả nhà",
-    desc: "Anh bảo em cúttttt. Ẻm ngoan, ểm dễ thương, ẻm hiền lành.... son yêu thích của ẻm là Black Rouge A10 Red Berry. Mong được gặp ẻm trong dịp liên hoan Tết này.",
+    desc: "Anh bảo em cúttttt. Ẻm ngoan, ẻm dễ thương, ẻm hiền lành.... son yêu thích của ẻm là Black Rouge A10 Red Berry. Mong được gặp ẻm trong dịp liên hoan Tết này.",
     img: "/sang.jpg",
     color: "from-pink-400 to-rose-500",
   },
   {
     id: 16,
     title: "2p cho quảng cáo",
-    person: "",
+    person: "nhà xe Huyền Thắm",
     desc: "Dịch vụ xe Tùng Dương chuyên 👉 Đưa đón Sân bay ✈ 👉Đưa đón về quê các tỉnh🏵️ 👉Đưa đón đi khám bệnh 💌 👉Hợp đồng du lịch các tỉnh …👉Xe ghép…✍Đội xe UY TÍN, CHẤT LƯỢNG, CHUYÊN NGHIỆP (Nhiệt tình chu đáo - Đón trả tận nơi )📞☎️ 0969914796-0876389111❤️ĐI AN TOÀN VỀ HẠNH PHÚC🆗 HÂN HẠNH PHỤC VỤ 24/24",
     img: "/huyentham.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 17,
+    title: "Top 2 người mà tôi luôn tin tưởng",
+    person: "Top 2 thầy Chi",
+    desc: "Ngoài kiến thức chuyên môn vững vàng tận tình giúp đỡ học sinh thầy còn là người bạn, người anh luôn lắng nghe và chia sẻ với chúng tôi những khó khăn trong cuộc sống (tôi phét đấy thầy đánh đau vl). Chúc thầy luôn mạnh khỏe và hạnh phúc bên gia đình nhỏ của mình.",
+    img: "/thaychi.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 18,
+    title: "Top 2 người mà tôi luôn tin tưởng",
+    person: "Top 1 cô Hằng",
+    desc: "Nhắc đến tên tôi vẫn còn nỗi sợ trong tim những cái bạt tai không biết đến từ hướng nào nhưng nhờ vậy cho đến hiện tại lớp 9 là năm tôi giỏi tiếng anh nhất, cảm ơn cô đã luôn tận tâm với chúng tôi. Chúc cô luôn mạnh khoẻ để mấy bé khoá dưới cũng được cô dạy dỗ như chúng tôi :))",
+    img: "/cohang.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 19,
+    title: "Tài sắc vẹn toàn",
+    person: "Khánh Vũ",
+    desc: "Hôm qua lên núi hái chè. Có thằng Khánh chó ngủ lè lưỡi ra",
+    img: "/kiniem44.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 20,
+    title: "Cựu lớp trưởng",
+    person: "Trường Lâm",
+    desc: "Nụ cười chợt thoáng vụt tắt trên má hồng, em nào đâu muốn lấy chồng, đùa chút thôi nhưng bạn Trường tôi rất ngầu và đáng tin cậy, Trường đang làm việc tại bệnh viện 108 không ai mong muốn gặp bạn ở đó đâu nhưng nếu có việc thì hãy liên hệ Trường, năm nay cố gắng về ăn Tết cùng lớp nhé!",
+    img: "/kiniem59.jpg",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 21,
+    title: "Sói cô đơn",
+    person: "Thiếu gia Duy Giang",
+    desc: "Không rượu chè ít giao tiếp thân hình mảnh mai vú hơi thâm, năm nay hãy cụm ly cùng lớp và giao tiếp nhiều hơn đừng có im lặng như mọi năm Duy nhé, cảm ơn Duy đã cho lớp mượn nhà tổ chức Tết 2026.",
+    img: "/duy.jpg",
     color: "from-pink-400 to-rose-500",
   },
 ];
@@ -1610,20 +1657,6 @@ const NewYearPopup = ({ onClose, darkMode }) => (
 
       {/* Content */}
       <div className="relative z-10 text-center space-y-6">
-        {/* Icon */}
-        <div className="flex justify-center">
-          <div
-            className={`p-4 rounded-full animate-bounce ${
-              darkMode
-                ? "bg-gradient-to-br from-yellow-400 to-orange-500"
-                : "bg-gradient-to-br from-pink-400 to-red-500"
-            }`}
-          >
-            <Sparkles className="w-12 h-12 text-white" />
-          </div>
-        </div>
-
-        {/* Title */}
         <h2
           className={`text-4xl font-black tracking-tight ${
             darkMode
@@ -1644,14 +1677,14 @@ const NewYearPopup = ({ onClose, darkMode }) => (
             🧧 Năm mới đến rồi, cả lớp 9A thân yêu ơi! 🧧
           </p>
           <p>
-            Một năm đã trôi qua với biết bao kỷ niệm ngọt ngào, những tháng ngày
-            học hành, vui đùa, và chia sẻ cùng nhau.
+            Một năm đã trôi qua với biết bao thứ thay đổi nhưng chúng ta hãy nhớ
+            ngày gặp mặt cuối năm này nhé.
           </p>
           <p className="font-bold text-xl">
             Chúc các bạn năm mới An Khang - Thịnh Vượng - Hạnh Phúc!
           </p>
           <p>
-            ✨ Học giỏi hơn, đẹp hơn, giàu hơn
+            ✨ Phát triển hơn, giàu hơn, hạnh phúc hơn
             <br />
             💖 Tình bạn mãi bền chặt
             <br />
@@ -1665,18 +1698,6 @@ const NewYearPopup = ({ onClose, darkMode }) => (
             khắc tuyệt vời đó nhé! 💕
           </p>
         </div>
-
-        {/* Button */}
-        <button
-          onClick={onClose}
-          className={`px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:scale-110 active:scale-95 transition-all mt-6 ${
-            darkMode
-              ? "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-white"
-              : "bg-gradient-to-r from-pink-500 via-orange-500 to-red-500 text-white"
-          }`}
-        >
-          Vào Lớp Thôi! 🎉
-        </button>
       </div>
     </div>
   </div>
