@@ -280,8 +280,8 @@ const ACHIEVEMENTS_DATA = [
     id: 27,
     title: "🙈",
     person: "My name is Hiếu",
-    desc: "Ờ tôi là Hiếu Đào, tôi không tự viết về mình được nên nhờ các bạn nhận xét. web này tôi làm ra với mục đích lưu giữ kỉ niệm lớp mình, nếu có gạch đá thì nhẹ tay với tôi thôi nhé. Chúc mừng năm mới",
-    img: "/thao.jpg",
+    desc: "Ờ tôi là Hiếu Đào, tôi tự viết về tôi thì nó kì lắm nên nhờ các bạn nhận xét (nội dung nhận xét chỉ được xoay quanh ngoan hiền, đẹp trai, tốt bụng...). web này tôi làm ra với mục đích lưu giữ kỉ niệm lớp mình, nếu có gạch đá thì nhẹ tay với tôi thôi nhé. Chúc mừng năm mới",
+    img: "/hieu.jpg",
     color: "from-pink-400 to-rose-500",
   },
 ];
@@ -558,6 +558,76 @@ const SECTIONS = [
 // --- COMPONENT MỚI: THÀNH TÍCH ẤN TƯỢNG ---
 const AchievementsDetail = ({ onBack }) => {
   const [revealedIds, setRevealedIds] = useState(new Set());
+  const [achievementComments, setAchievementComments] = useState({});
+  const [showCommentForm, setShowCommentForm] = useState(null);
+  const [commentName, setCommentName] = useState("");
+  const [commentText, setCommentText] = useState("");
+
+  // Load comment name from localStorage
+  useEffect(() => {
+    const savedName = localStorage.getItem("chatName");
+    if (savedName) setCommentName(savedName);
+  }, []);
+
+  // Load comments for all achievements
+  useEffect(() => {
+    ACHIEVEMENTS_DATA.forEach((item) => {
+      const commentsRef = ref(database, `achievement-comments/${item.id}`);
+      onValue(commentsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const loadedComments = Object.values(data).sort(
+            (a, b) => a.timestamp - b.timestamp,
+          );
+          setAchievementComments((prev) => ({
+            ...prev,
+            [item.id]: loadedComments,
+          }));
+        } else {
+          setAchievementComments((prev) => ({
+            ...prev,
+            [item.id]: [],
+          }));
+        }
+      });
+    });
+  }, []);
+
+  const handleSendComment = (achievementId) => {
+    if (!commentText.trim() || !commentName.trim()) {
+      alert("Nhập tên và bình luận đi bạn ơi!");
+      return;
+    }
+    const commentsRef = ref(database, `achievement-comments/${achievementId}`);
+    push(commentsRef, {
+      user: commentName,
+      text: commentText,
+      time: new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      timestamp: Date.now(),
+    });
+    setCommentText("");
+    localStorage.setItem("chatName", commentName);
+    setShowCommentForm(null);
+  };
+
+  const getAvatarColor = (name) => {
+    const colors = [
+      "bg-gradient-to-br from-pink-400 to-pink-600",
+      "bg-gradient-to-br from-purple-400 to-purple-600",
+      "bg-gradient-to-br from-blue-400 to-blue-600",
+      "bg-gradient-to-br from-green-400 to-green-600",
+      "bg-gradient-to-br from-yellow-400 to-yellow-600",
+      "bg-gradient-to-br from-red-400 to-red-600",
+      "bg-gradient-to-br from-indigo-400 to-indigo-600",
+    ];
+    const index =
+      name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) %
+      colors.length;
+    return colors[index];
+  };
 
   const toggleReveal = (id) => {
     const newSet = new Set(revealedIds);
@@ -674,6 +744,92 @@ const AchievementsDetail = ({ onBack }) => {
                   </div>
                 )}
               </div>
+
+              {/* Phần bình luận */}
+              {isRevealed && (
+                <div
+                  className="mt-5 pt-5 border-t border-gray-100"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Hiển thị số lượng bình luận và nút mở form */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs text-gray-500 font-medium">
+                      💬 {achievementComments[item.id]?.length || 0} bình luận
+                    </span>
+                    <button
+                      onClick={() =>
+                        setShowCommentForm(
+                          showCommentForm === item.id ? null : item.id,
+                        )
+                      }
+                      className="text-xs font-bold text-pink-500 hover:text-pink-600 transition-colors"
+                    >
+                      {showCommentForm === item.id
+                        ? "Ẩn form"
+                        : "Viết bình luận"}
+                    </button>
+                  </div>
+
+                  {/* Danh sách bình luận */}
+                  {achievementComments[item.id]?.length > 0 && (
+                    <div className="space-y-2 mb-3 max-h-48 overflow-y-auto custom-scrollbar">
+                      {achievementComments[item.id].map((comment, idx) => (
+                        <div
+                          key={idx}
+                          className="flex gap-2 text-left slide-in-right"
+                        >
+                          <div
+                            className={`w-7 h-7 rounded-full ${getAvatarColor(
+                              comment.user,
+                            )} flex items-center justify-center text-white font-bold text-xs shadow-sm flex-shrink-0`}
+                          >
+                            {comment.user.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-baseline gap-2 mb-0.5">
+                              <span className="font-bold text-xs text-gray-800">
+                                {comment.user}
+                              </span>
+                              <span className="text-[10px] text-gray-400">
+                                {comment.time}
+                              </span>
+                            </div>
+                            <div className="bg-gray-50 p-2 rounded-lg rounded-tl-sm text-xs text-gray-700 break-words">
+                              {comment.text}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Form nhập bình luận */}
+                  {showCommentForm === item.id && (
+                    <div className="bg-gray-50 p-3 rounded-2xl space-y-2 animate-in slide-in-from-top-2">
+                      <input
+                        type="text"
+                        value={commentName}
+                        onChange={(e) => setCommentName(e.target.value)}
+                        placeholder="Tên của bạn"
+                        className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all"
+                      />
+                      <textarea
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder="Viết bình luận..."
+                        rows={2}
+                        className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all resize-none"
+                      />
+                      <button
+                        onClick={() => handleSendComment(item.id)}
+                        className="w-full bg-gradient-to-r from-pink-400 to-orange-400 text-white font-bold py-2 px-4 rounded-xl text-xs hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                      >
+                        <Send className="w-3 h-3" /> Gửi bình luận
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
