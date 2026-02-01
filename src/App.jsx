@@ -1022,6 +1022,7 @@ const LuckyDrawDetail = ({ onBack }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [deleteError, setDeleteError] = useState("");
+  const [usedChallenges, setUsedChallenges] = useState([]);
 
   // Load saved name from localStorage
   useEffect(() => {
@@ -1045,11 +1046,37 @@ const LuckyDrawDetail = ({ onBack }) => {
     });
   }, []);
 
+  // Load used challenges from Firebase
+  useEffect(() => {
+    const usedRef = ref(database, "used-challenges");
+    onValue(usedRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setUsedChallenges(Object.values(data));
+      } else {
+        setUsedChallenges([]);
+      }
+    });
+  }, []);
+
   const handleSpin = () => {
     if (isSpinning || !userName.trim()) {
       if (!userName.trim()) {
         alert("Vui lòng nhập tên của bạn trước khi quay!");
       }
+      return;
+    }
+
+    // Lọc ra các thử thách chưa được sử dụng
+    const availableChallenges = CHALLENGES.filter(
+      (challenge) => !usedChallenges.some((used) => used.id === challenge.id),
+    );
+
+    // Kiểm tra xem còn thử thách nào không
+    if (availableChallenges.length === 0) {
+      alert(
+        "🎉 Đã hết thử thách! Tất cả các thử thách đã được ai đó làm rồi. Hãy xóa lịch sử để chơi lại nhé!",
+      );
       return;
     }
 
@@ -1060,25 +1087,29 @@ const LuckyDrawDetail = ({ onBack }) => {
     setShowResult(false);
     setSelectedChallenge(null);
 
-    // Quay số ngẫu nhiên trong 3 giây
+    // Quay số ngẫu nhiên trong 3 giây - chỉ từ các thử thách còn lại
     let counter = 0;
     const interval = setInterval(() => {
       setSelectedChallenge(
-        CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)],
+        availableChallenges[
+          Math.floor(Math.random() * availableChallenges.length)
+        ],
       );
       counter++;
 
       if (counter > 30) {
         clearInterval(interval);
         const finalChallenge =
-          CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+          availableChallenges[
+            Math.floor(Math.random() * availableChallenges.length)
+          ];
 
         setTimeout(() => {
           setSelectedChallenge(finalChallenge);
           setIsSpinning(false);
           setShowResult(true);
 
-          // Save to Firebase
+          // Save to Firebase history
           const historyRef = ref(database, "lucky-draw-history");
           push(historyRef, {
             name: userName.trim(),
@@ -1087,6 +1118,14 @@ const LuckyDrawDetail = ({ onBack }) => {
             color: finalChallenge.color,
             timestamp: Date.now(),
             time: new Date().toLocaleString("vi-VN"),
+          });
+
+          // Save challenge as used
+          const usedRef = ref(database, "used-challenges");
+          push(usedRef, {
+            id: finalChallenge.id,
+            text: finalChallenge.text,
+            timestamp: Date.now(),
           });
         }, 500);
       }
@@ -1116,14 +1155,16 @@ const LuckyDrawDetail = ({ onBack }) => {
       return;
     }
 
-    // Xóa toàn bộ lịch sử trong Firebase
+    // Xóa toàn bộ lịch sử và các thử thách đã dùng trong Firebase
     const historyRef = ref(database, "lucky-draw-history");
-    remove(historyRef)
+    const usedRef = ref(database, "used-challenges");
+
+    Promise.all([remove(historyRef), remove(usedRef)])
       .then(() => {
         setShowDeleteModal(false);
         setDeletePassword("");
         setDeleteError("");
-        alert("✅ Đã xóa toàn bộ lịch sử thành công!");
+        alert("✅ Đã xóa toàn bộ lịch sử và reset thử thách thành công!");
       })
       .catch((error) => {
         setDeleteError("❌ Lỗi khi xóa: " + error.message);
@@ -1147,9 +1188,15 @@ const LuckyDrawDetail = ({ onBack }) => {
           <h2 className="text-3xl font-extrabold mb-2 drop-shadow-lg">
             🎰 Máy Bốc Thăm May Mắn
           </h2>
-          <p className="text-white/95 text-base font-medium">
+          <p className="text-white/95 text-base font-medium mb-2">
             Nhập tên và quay số xem bạn trúng thử thách gì! 😂
           </p>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full font-bold">
+              📋 Còn lại: {CHALLENGES.length - usedChallenges.length}/
+              {CHALLENGES.length} thử thách
+            </span>
+          </div>
         </div>
       </div>
 
@@ -1838,9 +1885,9 @@ const DonateDetail = ({ onBack }) => {
           <p className="text-base font-extrabold text-gray-700 mb-4">
             Quét mã ủng hộ quỹ lớp:
           </p>
-          <div className="w-40 h-40 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-xl group">
+          <div className="w-40 h-60 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-xl group">
             <img
-              src="/qr.jpeg"
+              src="/qrungho.jpeg"
               alt="QR Code"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               onError={(e) => {
@@ -2416,7 +2463,7 @@ const NewYearPopup = ({ onClose, darkMode }) => (
       </button>
 
       {/* Content */}
-      <div className="relative z-10 text-center space-y-6">
+      <div className="relative w-full z-10 text-center space-y-6">
         <h2
           className={`text-4xl font-black tracking-tight ${
             darkMode
@@ -2443,15 +2490,7 @@ const NewYearPopup = ({ onClose, darkMode }) => (
           <p className="font-bold text-xl">
             Chúc các bạn năm mới An Khang - Thịnh Vượng - Hạnh Phúc!
           </p>
-          <p>
-            ✨ Phát triển hơn, giàu hơn, hạnh phúc hơn
-            <br />
-            💖 Tình bạn mãi bền chặt
-            <br />
-            🌟 Ước mơ thành hiện thực
-            <br />
-            🎯 Thành công rực rỡ!
-          </p>
+
           <p className="italic text-base">
             Dù chúng ta đã xa nhau từ lâu, nhưng những kỷ niệm về lớp 9A sẽ mãi
             mãi trong tim mỗi người chúng ta. Hãy cùng nhau ôn lại những khoảnh
