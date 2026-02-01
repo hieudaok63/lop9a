@@ -2490,11 +2490,7 @@ const NewYearPopup = ({ onClose, darkMode }) => (
           <p className="font-bold text-xl">
             Chúc các bạn năm mới An Khang - Thịnh Vượng - Hạnh Phúc!
           </p>
-          <p>
-            💖 Tình bạn mãi bền chặt
-            <br />
-            🎯 Thành công rực rỡ!
-          </p>
+
           <p className="italic text-base">
             Dù chúng ta đã xa nhau từ lâu, nhưng những kỷ niệm về lớp 9A sẽ mãi
             mãi trong tim mỗi người chúng ta. Hãy cùng nhau ôn lại những khoảnh
