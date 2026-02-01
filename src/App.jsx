@@ -2463,7 +2463,7 @@ const NewYearPopup = ({ onClose, darkMode }) => (
       </button>
 
       {/* Content */}
-      <div className="relative w-full z-10 text-center space-y-6">
+      <div className="relative z-10 text-center space-y-6">
         <h2
           className={`text-4xl font-black tracking-tight ${
             darkMode
@@ -2490,13 +2490,29 @@ const NewYearPopup = ({ onClose, darkMode }) => (
           <p className="font-bold text-xl">
             Chúc các bạn năm mới An Khang - Thịnh Vượng - Hạnh Phúc!
           </p>
-
+          <p>
+            💖 Tình bạn mãi bền chặt
+            <br />
+            🎯 Thành công rực rỡ!
+          </p>
           <p className="italic text-base">
             Dù chúng ta đã xa nhau từ lâu, nhưng những kỷ niệm về lớp 9A sẽ mãi
             mãi trong tim mỗi người chúng ta. Hãy cùng nhau ôn lại những khoảnh
             khắc tuyệt vời đó nhé! 💕
           </p>
         </div>
+
+        {/* Button đóng lớn ở dưới */}
+        <button
+          onClick={onClose}
+          className={`w-full py-4 px-6 rounded-2xl font-bold text-lg shadow-xl hover:scale-105 active:scale-95 transition-all ${
+            darkMode
+              ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-500 hover:to-pink-500"
+              : "bg-gradient-to-r from-pink-500 to-orange-500 text-white hover:from-pink-600 hover:to-orange-600"
+          }`}
+        >
+          Đóng 🎉
+        </button>
       </div>
     </div>
   </div>
