@@ -32,7 +32,7 @@ import {
 
 // Import Firebase (Giữ nguyên cấu hình cũ của bạn)
 import { database } from "./firebase";
-import { ref, push, onValue } from "firebase/database";
+import { ref, push, onValue, remove } from "firebase/database";
 
 // --- CẤU HÌNH PLAYLIST NHẠC ---
 // Lưu ý: File nhạc phải nằm trong thư mục 'public'
@@ -286,6 +286,166 @@ const ACHIEVEMENTS_DATA = [
   },
 ];
 
+const CHALLENGES = [
+  {
+    id: 1,
+    text: "Hát 1 bài karaoke (bài gì cũng được)",
+    emoji: "🎤",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    id: 2,
+    text: "Múa 1 điệu sexy dance 30 giây",
+    emoji: "💃",
+    color: "from-purple-400 to-indigo-500",
+  },
+  {
+    id: 3,
+    text: "Kể 1 câu chuyện giường chiếu của bạn khiến mọi người đỏ mặt",
+    emoji: "😳",
+    color: "from-red-400 to-orange-500",
+  },
+  {
+    id: 4,
+    text: "Uống 2 ly rượu",
+    emoji: "🥤",
+    color: "from-blue-400 to-cyan-500",
+  },
+  {
+    id: 5,
+    text: "Ngậm chai nước ngọt trong miệng 5 phút",
+    emoji: "🤸",
+    color: "from-green-400 to-emerald-500",
+  },
+  {
+    id: 6,
+    text: "Chụp ảnh tự sướng với 5 người và đăng story",
+    emoji: "🤳",
+    color: "from-blue-400 to-cyan-500",
+  },
+  {
+    id: 7,
+    text: "Nói lời yêu thương với 1 người bất kỳ trong lớp",
+    emoji: "💕",
+    color: "from-pink-500 to-rose-600",
+  },
+  {
+    id: 8,
+    text: "Bắt chước hành động 1 người trong lớp (mọi người đoán)",
+    emoji: "🎭",
+    color: "from-violet-400 to-purple-500",
+  },
+  {
+    id: 9,
+    text: "Chia sẻ 1 kỷ niệm đáng nhớ nhất với lớp 9A",
+    emoji: "📖",
+    color: "from-teal-400 to-cyan-500",
+  },
+  {
+    id: 10,
+    text: "Kể 1 câu chuyện cười không ai cười tự uống 2 ly",
+    emoji: "👻",
+    color: "from-indigo-400 to-purple-500",
+  },
+  {
+    id: 11,
+    text: "Làm 10 cái hít đất (nam) / 10 cái squat (nữ)",
+    emoji: "💪",
+    color: "from-blue-500 to-indigo-600",
+  },
+  {
+    id: 12,
+    text: "Khen 3 người trong lớp bằng những lời hay nhất",
+    emoji: "🌟",
+    color: "from-yellow-500 to-amber-600",
+  },
+  {
+    id: 13,
+    text: "Để 3 người trong lớp vẽ mặt bạn trong 1 phút",
+    emoji: "🎮",
+    color: "from-rose-400 to-pink-500",
+  },
+
+  {
+    id: 14,
+    text: "Hát 1 bài mà phải thay lời bằng tiếng 'Meow'",
+    emoji: "😺",
+    color: "from-orange-500 to-amber-600",
+  },
+  {
+    id: 15,
+    text: "Kể tên 9 giáo viên dạy toán từ lớp 1 đến lớp 9 (nếu sai uống 2 ly)",
+    emoji: "🔄",
+    color: "from-purple-500 to-indigo-600",
+  },
+  {
+    id: 16,
+    text: "Đọc to 3 lịch sử tìm kiếm gần nhất ",
+    emoji: "🫣",
+    color: "from-red-400 to-pink-500",
+  },
+  {
+    id: 17,
+    text: "Trả lời thật: Trong lớp 9A từng crush ai?",
+    emoji: "💘",
+    color: "from-rose-400 to-red-500",
+  },
+  {
+    id: 18,
+    text: "Giả giọng người yêu khi dỗi và nói 1 câu bất kỳ",
+    emoji: "🙄",
+    color: "from-amber-400 to-orange-500",
+  },
+  {
+    id: 19,
+    text: "Gọi điện cho 'crush' hoặc người yêu, vợ, chồng và nói 1 câu 18+",
+    emoji: "📞",
+    color: "from-pink-500 to-rose-600",
+  },
+  {
+    id: 20,
+    text: "Thực hiện 1 màn giới thiệu bản thân như MC",
+    emoji: "🎙️",
+    color: "from-red-500 to-rose-600",
+  },
+  {
+    id: 21,
+    text: "Được miễn thách thức - LUCKY! 🎉",
+    emoji: "🍀",
+    color: "from-green-500 to-emerald-600",
+  },
+  {
+    id: 22,
+    text: "Hôn người đối diện",
+    emoji: "😘",
+    color: "from-red-500 to-rose-600",
+  },
+  {
+    id: 23,
+    text: "Kể 1 kỷ niệm hài hước nhất từng xảy ra trong lớp",
+    emoji: "😂",
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    id: 24,
+    text: "Nói 3 ưu điểm của lớp 9A mà bạn tự hào nhất",
+    emoji: "🌈",
+    color: "from-green-400 to-emerald-500",
+  },
+  {
+    id: 25,
+    text: "Chơi nối từ ai thua uống 2 ly",
+    emoji: "🧠",
+    color: "from-cyan-400 to-blue-500",
+  },
+  {
+    id: 26,
+    text: "Đứng lên nói 1 câu cảm ơn mà bình thường chưa từng nói",
+    emoji: "💌",
+    color: "from-pink-400 to-rose-500",
+  },
+];
+
 // --- CSS ĐỘNG ---
 const globalStyles = `
   @keyframes floatUp {
@@ -534,6 +694,15 @@ const SECTIONS = [
     border: "border-purple-200",
     text: "text-purple-800",
     desc: "Những kỉ lục Guinness độc lạ của lớp 9A.",
+  },
+  {
+    id: "luckydraw",
+    title: "🎰 Máy Bốc Thăm May Mắn",
+    icon: <Gift className="w-6 h-6 text-green-500" />,
+    color: "bg-green-50",
+    border: "border-green-200",
+    text: "text-green-800",
+    desc: "Quay số may mắn - Ai trúng thì... 😂",
   },
   {
     id: "memories",
@@ -839,6 +1008,390 @@ const AchievementsDetail = ({ onBack }) => {
       <p className="text-center text-gray-400 text-xs mt-8 pb-4">
         * Hình ảnh chỉ mang tính chất minh họa (hoặc dìm hàng)
       </p>
+    </div>
+  );
+};
+
+// --- COMPONENT MỚI: MÁY BỐC THĂM MAY MẮN ---
+const LuckyDrawDetail = ({ onBack }) => {
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [drawHistory, setDrawHistory] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [deleteError, setDeleteError] = useState("");
+
+  // Load saved name from localStorage
+  useEffect(() => {
+    const savedName = localStorage.getItem("luckyDrawName");
+    if (savedName) setUserName(savedName);
+  }, []);
+
+  // Load history from Firebase
+  useEffect(() => {
+    const historyRef = ref(database, "lucky-draw-history");
+    onValue(historyRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const historyArray = Object.values(data).sort(
+          (a, b) => b.timestamp - a.timestamp,
+        );
+        setDrawHistory(historyArray);
+      } else {
+        setDrawHistory([]);
+      }
+    });
+  }, []);
+
+  const handleSpin = () => {
+    if (isSpinning || !userName.trim()) {
+      if (!userName.trim()) {
+        alert("Vui lòng nhập tên của bạn trước khi quay!");
+      }
+      return;
+    }
+
+    // Save name to localStorage
+    localStorage.setItem("luckyDrawName", userName.trim());
+
+    setIsSpinning(true);
+    setShowResult(false);
+    setSelectedChallenge(null);
+
+    // Quay số ngẫu nhiên trong 3 giây
+    let counter = 0;
+    const interval = setInterval(() => {
+      setSelectedChallenge(
+        CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)],
+      );
+      counter++;
+
+      if (counter > 30) {
+        clearInterval(interval);
+        const finalChallenge =
+          CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+
+        setTimeout(() => {
+          setSelectedChallenge(finalChallenge);
+          setIsSpinning(false);
+          setShowResult(true);
+
+          // Save to Firebase
+          const historyRef = ref(database, "lucky-draw-history");
+          push(historyRef, {
+            name: userName.trim(),
+            challenge: finalChallenge.text,
+            emoji: finalChallenge.emoji,
+            color: finalChallenge.color,
+            timestamp: Date.now(),
+            time: new Date().toLocaleString("vi-VN"),
+          });
+        }, 500);
+      }
+    }, 100);
+  };
+
+  const getAvatarColor = (name) => {
+    const colors = [
+      "bg-gradient-to-br from-pink-400 to-rose-500",
+      "bg-gradient-to-br from-purple-400 to-indigo-500",
+      "bg-gradient-to-br from-blue-400 to-cyan-500",
+      "bg-gradient-to-br from-green-400 to-emerald-500",
+      "bg-gradient-to-br from-yellow-400 to-orange-500",
+      "bg-gradient-to-br from-red-400 to-pink-500",
+    ];
+    const hash = name
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return colors[hash % colors.length];
+  };
+
+  const handleDeleteHistory = () => {
+    if (deletePassword !== "admin@123") {
+      setDeleteError(
+        "❌ Quay rồi thì chịu đi bạn ơi đừng có mà xoá không có password đâu đừng để Hiếu Đào nói nhiều😌",
+      );
+      return;
+    }
+
+    // Xóa toàn bộ lịch sử trong Firebase
+    const historyRef = ref(database, "lucky-draw-history");
+    remove(historyRef)
+      .then(() => {
+        setShowDeleteModal(false);
+        setDeletePassword("");
+        setDeleteError("");
+        alert("✅ Đã xóa toàn bộ lịch sử thành công!");
+      })
+      .catch((error) => {
+        setDeleteError("❌ Lỗi khi xóa: " + error.message);
+      });
+  };
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10 pb-20 px-4 pt-4">
+      <button
+        onClick={onBack}
+        className="mb-6 flex items-center gap-2 text-gray-600 bg-white/90 px-4 py-2.5 rounded-full shadow-lg backdrop-blur-md hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 transition-all border border-gray-100"
+      >
+        <ArrowLeft className="w-4 h-4" /> Về Home
+      </button>
+
+      {/* Header */}
+      <div className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 p-8 rounded-[35px] text-white shadow-2xl mb-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 shimmer"></div>
+        <Gift className="absolute top-4 right-4 text-white/40 w-14 h-14 animate-pulse" />
+        <div className="relative z-10">
+          <h2 className="text-3xl font-extrabold mb-2 drop-shadow-lg">
+            🎰 Máy Bốc Thăm May Mắn
+          </h2>
+          <p className="text-white/95 text-base font-medium">
+            Nhập tên và quay số xem bạn trúng thử thách gì! 😂
+          </p>
+        </div>
+      </div>
+
+      {/* Hướng dẫn */}
+      <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-2xl mb-6 border-2 border-yellow-200">
+        <h3 className="text-lg font-bold text-orange-600 mb-3 flex items-center gap-2">
+          <Sparkles className="w-5 h-5" /> Cách chơi:
+        </h3>
+        <ul className="space-y-2 text-sm text-gray-700">
+          <li className="flex items-start gap-2">
+            <span className="text-orange-500 font-bold">1.</span>
+            <span>Nhập tên của bạn vào ô bên dưới</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-orange-500 font-bold">2.</span>
+            <span>Bấm nút "QUAY SỐ MAY MẮN"</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-orange-500 font-bold">3.</span>
+            <span>Sẽ có một món quà bất ngờ dành cho bạn!</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-orange-500 font-bold">4.</span>
+            <span>Lớn rồi quay được cái gì thì nhận cái đó nhé</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Form nhập tên và quay số */}
+      <div className="bg-white rounded-3xl shadow-xl p-6 mb-6 border-2 border-gray-100">
+        <div className="space-y-4">
+          {/* Input tên */}
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              👤 Tên của bạn: (Đừng ghi tên người khác các bạn nhé lớn rùi)
+            </label>
+            <input
+              type="text"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Nhập tên của bạn..."
+              className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-green-400 focus:ring-4 focus:ring-green-100 outline-none transition-all"
+              disabled={isSpinning}
+            />
+          </div>
+
+          {/* Kết quả quay */}
+          {selectedChallenge && (
+            <div
+              className={`bg-gradient-to-r ${selectedChallenge.color} p-6 rounded-2xl border-2 border-white/20`}
+            >
+              <p className="text-sm text-white/90 mb-2 text-center font-semibold">
+                🎯 Thử thách của bạn:
+              </p>
+              <div
+                className={`text-center ${isSpinning ? "animate-pulse" : ""}`}
+              >
+                <div className="text-5xl mb-3">{selectedChallenge.emoji}</div>
+                <p className="text-lg font-bold text-white drop-shadow-md">
+                  {selectedChallenge.text}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Nút quay */}
+          <button
+            onClick={handleSpin}
+            disabled={isSpinning || !userName.trim()}
+            className={`w-full py-5 rounded-2xl font-black text-xl shadow-2xl transition-all relative overflow-hidden ${
+              isSpinning || !userName.trim()
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 hover:scale-105 active:scale-95 cursor-pointer"
+            } text-white`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 shimmer"></div>
+            <span className="relative z-10">
+              {isSpinning ? "🎰 ĐANG QUAY..." : "🎲 QUAY SỐ MAY MẮN"}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Kết quả vừa quay */}
+      {showResult && selectedChallenge && (
+        <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-3xl shadow-xl border-2 border-pink-200 animate-in zoom-in duration-500 mb-6">
+          <div className="text-center">
+            <p className="text-3xl mb-3">🎉</p>
+            <p className="text-lg font-bold text-gray-800 mb-2">
+              Chúc mừng {userName}! 😂
+            </p>
+            <p className="text-sm text-gray-600 mb-4">
+              Bạn phải thực hiện thử thách:
+            </p>
+            <div
+              className={`bg-gradient-to-r ${selectedChallenge.color} p-5 rounded-2xl shadow-lg`}
+            >
+              <div className="text-5xl mb-3">{selectedChallenge.emoji}</div>
+              <p className="text-lg font-bold text-white drop-shadow-md">
+                {selectedChallenge.text}
+              </p>
+            </div>
+            <p className="text-xs text-gray-500 mt-4 italic">
+              Mọi người hãy cổ vũ và chờ xem nhé! 😄
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Lịch sử quay số */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <Clock className="w-5 h-5 text-green-500!" />
+            Lịch sử quay số ({drawHistory.length})
+          </h3>
+          {drawHistory.length > 0 && (
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-xl text-sm transition-all hover:scale-105 active:scale-95 flex items-center gap-2 shadow-md"
+            >
+              <X className="w-4 h-4" /> Xóa lịch sử
+            </button>
+          )}
+        </div>
+
+        {drawHistory.length === 0 ? (
+          <div className="bg-gray-50 p-8 rounded-2xl text-center">
+            <p className="text-gray-400 text-sm">
+              Chưa có ai quay số. Hãy là người đầu tiên! 🎯
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3 max-h-[600px] overflow-y-auto">
+            {drawHistory.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className={`w-12 h-12 rounded-full ${getAvatarColor(item.name)} flex items-center justify-center text-white font-bold text-lg shadow-md flex-shrink-0`}
+                  >
+                    {item.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-gray-800 text-base">
+                        {item.name}
+                      </span>
+                      <span className="text-xs text-gray-400">{item.time}</span>
+                    </div>
+                    <div
+                      className={`bg-gradient-to-r ${item.color} p-3 rounded-xl inline-block`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl">{item.emoji}</span>
+                        <p className="text-sm font-semibold text-white">
+                          {item.challenge}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <p className="text-center text-gray-400 text-xs mt-8 pb-4">
+        * Trò chơi chỉ mang tính chất giải trí - vui là chính! 😊
+      </p>
+
+      {/* Modal xóa lịch sử với mật khẩu */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full animate-in zoom-in duration-300">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <AlertTriangle className="w-6 h-6 text-red-500" /> Xác nhận xóa
+              </h3>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setDeletePassword("");
+                  setDeleteError("");
+                }}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  🔒 Nhập mật khẩu để xác nhận:
+                </label>
+                <input
+                  type="password"
+                  value={deletePassword}
+                  onChange={(e) => {
+                    setDeletePassword(e.target.value);
+                    setDeleteError("");
+                  }}
+                  placeholder="Nhập mật khẩu..."
+                  className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-red-400 focus:ring-4 focus:ring-red-100 outline-none transition-all"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") handleDeleteHistory();
+                  }}
+                />
+              </div>
+
+              {deleteError && (
+                <p className="text-red-500 text-sm font-medium animate-in slide-in-from-top-2">
+                  {deleteError}
+                </p>
+              )}
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setDeletePassword("");
+                    setDeleteError("");
+                  }}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all hover:scale-105 active:scale-95"
+                >
+                  Hủy
+                </button>
+                <button
+                  onClick={handleDeleteHistory}
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg"
+                >
+                  Xóa ngay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -2286,6 +2839,9 @@ function App() {
             {activeTab === "achievements" && (
               <AchievementsDetail onBack={() => setActiveTab(null)} />
             )}
+            {activeTab === "luckydraw" && (
+              <LuckyDrawDetail onBack={() => setActiveTab(null)} />
+            )}
             {activeTab === "awards" && (
               <AwardsDetail onBack={() => setActiveTab(null)} />
             )}
@@ -2304,6 +2860,7 @@ function App() {
                           item.id === "donate" ||
                           item.id === "memories" ||
                           item.id === "achievements" ||
+                          item.id === "luckydraw" ||
                           item.id === "awards"
                             ? setActiveTab(item.id)
                             : alert(`Mục "${item.title}" đang xây dựng!`)
