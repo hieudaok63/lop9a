@@ -222,7 +222,7 @@ const ACHIEVEMENTS_DATA = [
     id: 20,
     title: "Bé hạt tiêu của lớp",
     person: "Bé Huyền",
-    desc: "Tôi nhớ bạn comback lớp mình vào năm lớp 9A, bạn nhỏ nhắn dễ thương hay cười, câu nói của Huyền khiến tôi tâm đắc nhất, Huyền nói: Quan trọng hay không không quan trọng, quan trọng là có quan trọng hay không. Mẹ 2 con năm nay cố gắng về ăn Tết cùng lớp nhé!",
+    desc: "Tôi nhớ bạn comback lớp mình vào năm lớp 6A, bạn nhỏ nhắn dễ thương hay cười, câu nói của Huyền khiến tôi tâm đắc nhất, Huyền nói: Quan trọng hay không không quan trọng, quan trọng là có quan trọng hay không. Mẹ 2 con năm nay cố gắng về ăn Tết cùng lớp nhé!",
     img: "/huyenhau.jpg",
     color: "from-pink-400 to-rose-500",
   },
@@ -527,15 +527,6 @@ const SECTIONS = [
     desc: "Vinh danh các 'Mạnh Thường Quân' của lớp.",
   },
   {
-    id: "memories",
-    title: "Góc Kỉ Niệm",
-    icon: <Camera className="w-6 h-6 text-blue-400" />,
-    color: "bg-blue-50",
-    border: "border-blue-200",
-    text: "text-blue-800",
-    desc: "Kho lưu trữ ảnh dìm hàng full HD.",
-  },
-  {
     id: "achievements", // ID MỚI
     title: "Thành Tích Ấn Tượng",
     icon: <Star className="w-6 h-6 text-purple-500" />,
@@ -544,6 +535,16 @@ const SECTIONS = [
     text: "text-purple-800",
     desc: "Những kỉ lục Guinness độc lạ của lớp 9A.",
   },
+  {
+    id: "memories",
+    title: "Góc Kỉ Niệm",
+    icon: <Camera className="w-6 h-6 text-blue-400" />,
+    color: "bg-blue-50",
+    border: "border-blue-200",
+    text: "text-blue-800",
+    desc: "Kho lưu trữ ảnh dìm hàng full HD.",
+  },
+
   {
     id: "awards",
     title: "Dự án nuôi Hiếu & Sơn",
@@ -1176,9 +1177,9 @@ const TetEventDetail = ({ onBack, onNavigateToDonate }) => (
             <p className="text-xs text-gray-500 uppercase font-bold mb-3 tracking-wider">
               Nội dung ck: Họ và tên + Vé Số
             </p>
-            <div className="w-36 h-36 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-lg relative group">
+            <div className="w-36 h-50 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400 mb-4 overflow-hidden border-2 border-purple-200 shadow-lg relative group">
               <img
-                src="/qr.jpeg"
+                src="/qrlong.jpeg"
                 alt="QR Code"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 onError={(e) => {
